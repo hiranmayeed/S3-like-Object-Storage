@@ -20,9 +20,26 @@ public class ReplicatedStorageService implements StorageService {
         System.out.println("Saving object: " + objectId);
         System.out.println("SHA-256 checksum: " + checksum);
 
-        node1.saveObject(objectId, data);
-        node2.saveObject(objectId, data);
-        node3.saveObject(objectId, data);
+        try {
+            node1.saveObject(objectId, data);
+            System.out.println("Saved to node1");
+        } catch (Exception e) {
+            System.out.println("Failed to save to node1");
+        }
+
+        try {
+            node2.saveObject(objectId, data);
+            System.out.println("Saved to node2");
+        } catch (Exception e) {
+            System.out.println("Failed to save to node2");
+        }
+
+        try {
+            node3.saveObject(objectId, data);
+            System.out.println("Saved to node3");
+        } catch (Exception e) {
+            System.out.println("Failed to save to node3");
+        }
     }
 
     @Override
