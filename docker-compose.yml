@@ -24,7 +24,7 @@ services:
     depends_on:
       - postgres
     volumes:
-      - object_storage:/app/storage
+      - object_storage:/app/storage-data
 
   api2:
     build: .
@@ -37,7 +37,7 @@ services:
     depends_on:
       - postgres
     volumes:
-      - object_storage:/app/storage
+      - object_storage:/app/storage-data
 
   nginx:
     image: nginx:alpine

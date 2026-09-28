@@ -84,4 +84,16 @@ public class ObjectService {
         return objectRepository.findByBucketAndObjectName(
                 bucket, objectName);
     }
+    
+    public void deleteObject(String bucketName, String objectName) {
+        Bucket bucket = bucketRepository.findByName(bucketName)
+                .orElseThrow(() -> new RuntimeException("Bucket not found"));
+
+        StoredObject object = objectRepository
+                .findFirstByBucketAndObjectNameOrderByVersionDesc(bucket, objectName)
+                .orElseThrow(() -> new RuntimeException("Object not found"));
+
+        object.setDeleted(true);
+        objectRepository.save(object);
+    }
 }

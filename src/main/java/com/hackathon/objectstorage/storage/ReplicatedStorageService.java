@@ -1,5 +1,8 @@
 package com.hackathon.objectstorage.storage;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class ReplicatedStorageService implements StorageService {
 
     private final LocalStorageService node1;
