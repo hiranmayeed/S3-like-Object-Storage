@@ -12,7 +12,7 @@ class LocalStorageServiceTest {
 
     @Test
     void shouldSaveAndGetObject() throws Exception {
-        LocalStorageService storageService = new LocalStorageService();
+        LocalStorageService storageService = new LocalStorageService("node1");
 
         byte[] data = "Hello S3".getBytes(StandardCharsets.UTF_8);
 
@@ -24,7 +24,7 @@ class LocalStorageServiceTest {
     }
     @Test
     void shouldDeleteObject() throws Exception {
-        LocalStorageService storageService = new LocalStorageService();
+        LocalStorageService storageService = new LocalStorageService("node1");
 
         byte[] data = "Hello S3".getBytes(StandardCharsets.UTF_8);
 
