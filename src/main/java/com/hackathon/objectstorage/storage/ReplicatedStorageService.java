@@ -14,6 +14,12 @@ public class ReplicatedStorageService implements StorageService {
 
     @Override
     public void saveObject(String objectId, byte[] data) throws java.io.IOException {
+
+        String checksum = ChecksumUtil.sha256(data);
+
+        System.out.println("Saving object: " + objectId);
+        System.out.println("SHA-256 checksum: " + checksum);
+
         node1.saveObject(objectId, data);
         node2.saveObject(objectId, data);
         node3.saveObject(objectId, data);
@@ -21,6 +27,7 @@ public class ReplicatedStorageService implements StorageService {
 
     @Override
     public byte[] getObject(String objectId) throws java.io.IOException {
+
         java.nio.file.Path node1Path =
                 java.nio.file.Path.of("storage-data", "node1", objectId);
 
