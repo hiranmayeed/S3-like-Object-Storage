@@ -1,0 +1,55 @@
+services:
+
+  postgres:
+    image: postgres:16
+    container_name: s3-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: object_storage
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  api1:
+    build: .
+    container_name: s3-api-1
+    environment:
+      INSTANCE_ID: API-1
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/object_storage
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    depends_on:
+      - postgres
+    volumes:
+      - object_storage:/app/storage
+
+  api2:
+    build: .
+    container_name: s3-api-2
+    environment:
+      INSTANCE_ID: API-2
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/object_storage
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    depends_on:
+      - postgres
+    volumes:
+      - object_storage:/app/storage
+
+  nginx:
+    image: nginx:alpine
+    container_name: s3-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - api1
+      - api2
+
+volumes:
+  postgres_data:
+  object_storage:
