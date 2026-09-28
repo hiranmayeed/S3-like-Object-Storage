@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S3-like Object Storage</title>
+    <link rel="stylesheet" href="style.css?v=2">
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+    <header class="hero">
+        <div>
+            <div class="eyebrow">SYSTEM DESIGN • OBJECT STORAGE</div>
+            <h1>S3-like Object Storage</h1>
+            <p class="subtitle">
+                A simplified distributed object-storage system inspired by Amazon S3,
+                built to demonstrate scalable storage, replication and load balancing.
+            </p>
+        </div>
+
+        <div id="health" class="status">
+            Checking system...
+        </div>
+    </header>
+
+
+    <!-- Architecture summary -->
+    <section class="architecture">
+        <div class="architecture-title">
+            <span>System Architecture</span>
+            <small>Stateless APIs + replicated storage</small>
+        </div>
+
+        <div class="architecture-flow">
+            <div class="architecture-node client">
+                <strong>Client</strong>
+                <span>Web UI</span>
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="architecture-node">
+                <strong>Nginx</strong>
+                <span>Load Balancer</span>
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="servers">
+                <div class="architecture-node">
+                    <strong>API 1</strong>
+                    <span>Stateless Server</span>
+                </div>
+
+                <div class="architecture-node">
+                    <strong>API 2</strong>
+                    <span>Stateless Server</span>
+                </div>
+            </div>
+
+            <div class="arrow">→</div>
+
+            <div class="storage">
+                <div class="architecture-node">
+                    <strong>PostgreSQL</strong>
+                    <span>Metadata</span>
+                </div>
+
+                <div class="architecture-node">
+                    <strong>Storage ×3</strong>
+                    <span>Replicated Objects</span>
+                </div>
+            </div>
+        </div>
+
+        <p class="architecture-description">
+            Requests enter through Nginx and are distributed across two stateless API
+            servers. PostgreSQL stores object metadata, while uploaded objects are
+            replicated across three storage nodes.
+        </p>
+    </section>
+
+
+    <!-- Create bucket -->
+    <section class="card">
+        <div class="section-heading">
+            <div>
+                <h2>Create Bucket</h2>
+                <p>Create a logical container for your objects.</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <input id="bucketName"
+                   type="text"
+                   placeholder="Enter bucket name">
+
+            <button onclick="createBucket()">
+                Create Bucket
+            </button>
+        </div>
+
+        <div id="bucketMessage" class="message"></div>
+    </section>
+
+
+    <!-- Buckets -->
+    <section class="card">
+        <div class="section-heading">
+            <div>
+                <h2>Buckets</h2>
+                <p>Select a bucket to manage its objects.</p>
+            </div>
+
+            <button class="secondary" onclick="loadBuckets()">
+                Refresh
+            </button>
+        </div>
+
+        <select id="bucketSelect" onchange="loadObjects()">
+            <option value="">Select a bucket</option>
+        </select>
+    </section>
+
+
+    <!-- Upload -->
+    <section class="card">
+        <div class="section-heading">
+            <div>
+                <h2>Upload Object</h2>
+                <p>Upload a file and automatically create its first version.</p>
+            </div>
+        </div>
+
+        <div class="upload-area">
+            <input id="objectName"
+                   type="text"
+                   placeholder="Object name (optional)">
+
+            <input id="fileInput" type="file">
+
+            <button onclick="uploadObject()">
+                Upload Object
+            </button>
+        </div>
+
+        <div id="uploadMessage" class="message"></div>
+    </section>
+
+
+    <!-- Objects -->
+    <section class="card">
+        <div class="section-heading">
+            <div>
+                <h2>Objects</h2>
+                <p>Download, inspect versions or delete stored objects.</p>
+            </div>
+
+            <button class="secondary" onclick="loadObjects()">
+                Refresh
+            </button>
+        </div>
+
+        <div id="objects">
+            <div class="empty">
+                Select a bucket to view its objects.
+            </div>
+        </div>
+    </section>
+
+
+    <footer>
+        <span>S3-like Object Storage</span>
+        <span>Hackathon System Design Prototype</span>
+    </footer>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

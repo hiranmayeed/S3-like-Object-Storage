@@ -1,0 +1,340 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Inter, Arial, sans-serif;
+    background: #f5f7fb;
+    color: #172033;
+}
+
+.container {
+    max-width: 1050px;
+    margin: 0 auto;
+    padding: 32px 24px 50px;
+}
+
+
+/* ---------- HEADER ---------- */
+
+.hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 30px;
+    margin-bottom: 28px;
+}
+
+.eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: #5267d9;
+    margin-bottom: 8px;
+}
+
+h1 {
+    margin: 0;
+    font-size: 34px;
+    letter-spacing: -0.8px;
+}
+
+.subtitle {
+    max-width: 700px;
+    margin: 10px 0 0;
+    color: #687287;
+    line-height: 1.6;
+    font-size: 15px;
+}
+
+.status {
+    white-space: nowrap;
+    padding: 9px 15px;
+    border-radius: 20px;
+    background: #e5e7eb;
+    color: #4b5563;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* ---------- ARCHITECTURE ---------- */
+
+.architecture {
+    background: #111827;
+    color: white;
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 20px;
+}
+
+.architecture-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.architecture-title small {
+    color: #9ca3af;
+    font-weight: 400;
+}
+
+.architecture-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.architecture-node {
+    min-width: 125px;
+    padding: 13px 16px;
+    background: #1f2937;
+    border: 1px solid #374151;
+    border-radius: 9px;
+    text-align: center;
+}
+
+.architecture-node strong {
+    display: block;
+    font-size: 13px;
+}
+
+.architecture-node span {
+    display: block;
+    margin-top: 4px;
+    color: #9ca3af;
+    font-size: 11px;
+}
+
+.arrow {
+    color: #93c5fd;
+    font-size: 20px;
+}
+
+.servers,
+.storage {
+    display: flex;
+    gap: 7px;
+}
+
+.architecture-description {
+    margin: 20px 0 0;
+    padding-top: 16px;
+    border-top: 1px solid #374151;
+    color: #c4cad5;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+
+/* ---------- CARDS ---------- */
+
+.card {
+    background: white;
+    border: 1px solid #e6e9ef;
+    border-radius: 12px;
+    padding: 22px;
+    margin-bottom: 18px;
+    box-shadow: 0 3px 12px rgba(20, 30, 50, 0.04);
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 16px;
+}
+
+.section-heading h2 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.section-heading p {
+    margin: 5px 0 0;
+    color: #7a8497;
+    font-size: 13px;
+}
+
+
+/* ---------- FORM ---------- */
+
+.row,
+.upload-area {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+input,
+select {
+    min-height: 42px;
+    padding: 10px 12px;
+    border: 1px solid #d8dde7;
+    border-radius: 7px;
+    background: white;
+    color: #172033;
+    font-size: 14px;
+    outline: none;
+}
+
+input:focus,
+select:focus {
+    border-color: #5267d9;
+    box-shadow: 0 0 0 3px rgba(82, 103, 217, 0.1);
+}
+
+input[type="text"],
+select {
+    flex: 1;
+    min-width: 230px;
+}
+
+
+/* ---------- BUTTONS ---------- */
+
+button {
+    min-height: 42px;
+    padding: 10px 17px;
+    border: none;
+    border-radius: 7px;
+    background: #5267d9;
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.15s ease;
+}
+
+button:hover {
+    background: #4155c4;
+    transform: translateY(-1px);
+}
+
+button.secondary {
+    background: #eef1f7;
+    color: #46516a;
+}
+
+button.secondary:hover {
+    background: #e2e6ef;
+}
+
+.delete {
+    background: #dc4b4b;
+}
+
+.delete:hover {
+    background: #bd3737;
+}
+
+
+/* ---------- MESSAGES ---------- */
+
+.message {
+    margin-top: 12px;
+    color: #5267d9;
+    font-size: 13px;
+}
+
+
+/* ---------- OBJECTS ---------- */
+
+.object {
+    padding: 16px;
+    margin-top: 10px;
+    border: 1px solid #e2e6ed;
+    border-radius: 9px;
+    background: #fafbfc;
+}
+
+.object-name {
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.object-info {
+    color: #778196;
+    font-size: 12px;
+    margin: 7px 0 10px;
+}
+
+.object button {
+    min-height: 34px;
+    padding: 7px 12px;
+    margin-right: 5px;
+    font-size: 12px;
+}
+
+.empty {
+    color: #8a93a3;
+    padding: 18px 0 5px;
+    font-size: 13px;
+}
+
+
+/* ---------- FOOTER ---------- */
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    color: #929aaa;
+    font-size: 11px;
+    padding: 10px 3px;
+}
+
+
+/* ---------- RESPONSIVE ---------- */
+
+@media (max-width: 700px) {
+
+    .container {
+        padding: 22px 15px 35px;
+    }
+
+    .hero {
+        flex-direction: column;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    .architecture-flow {
+        flex-direction: column;
+    }
+
+    .arrow {
+        transform: rotate(90deg);
+    }
+
+    .servers,
+    .storage {
+        flex-direction: column;
+    }
+
+    .architecture-node {
+        width: 180px;
+    }
+
+    .architecture-title {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .section-heading {
+        flex-direction: column;
+    }
+
+    footer {
+        flex-direction: column;
+        gap: 5px;
+    }
+}
