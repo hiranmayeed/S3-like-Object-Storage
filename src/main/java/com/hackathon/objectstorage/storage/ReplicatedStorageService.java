@@ -21,7 +21,21 @@ public class ReplicatedStorageService implements StorageService {
 
     @Override
     public byte[] getObject(String objectId) throws java.io.IOException {
-        return node1.getObject(objectId);
+        java.nio.file.Path node1Path =
+                java.nio.file.Path.of("storage-data", "node1", objectId);
+
+        if (java.nio.file.Files.exists(node1Path)) {
+            return node1.getObject(objectId);
+        }
+
+        java.nio.file.Path node2Path =
+                java.nio.file.Path.of("storage-data", "node2", objectId);
+
+        if (java.nio.file.Files.exists(node2Path)) {
+            return node2.getObject(objectId);
+        }
+
+        return node3.getObject(objectId);
     }
 
     @Override

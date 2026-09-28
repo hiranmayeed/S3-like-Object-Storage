@@ -16,7 +16,9 @@ public class LocalStorageService implements StorageService {
 
     @Override
     public byte[] getObject(String objectId) throws IOException {
-        java.nio.file.Path path = java.nio.file.Path.of("storage-data", "node1", objectId);
+        java.nio.file.Path path =
+                java.nio.file.Path.of("storage-data", nodeName, objectId);
+
         return java.nio.file.Files.readAllBytes(path);
     }
 

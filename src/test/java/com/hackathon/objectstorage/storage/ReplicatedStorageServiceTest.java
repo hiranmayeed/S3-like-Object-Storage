@@ -77,4 +77,24 @@ class ReplicatedStorageServiceTest {
         assertTrue(Files.notExists(node2Path));
         assertTrue(Files.notExists(node3Path));
     }
+    @Test
+    void shouldFallbackToNode2WhenNode1DoesNotHaveObject() throws Exception {
+        ReplicatedStorageService storageService =
+                new ReplicatedStorageService();
+
+        byte[] data = "Fallback test".getBytes(StandardCharsets.UTF_8);
+
+        storageService.saveObject("fallback-test.txt", data);
+
+        Path node1Path =
+                Path.of("storage-data", "node1", "fallback-test.txt");
+
+        Files.deleteIfExists(node1Path);
+
+
+        byte[] retrieved =
+                storageService.getObject("fallback-test.txt");
+
+        assertArrayEquals(data, retrieved);
+    }
 }
