@@ -22,10 +22,15 @@ public class StoredObject {
     private Integer version;
 
     private String storagePath;
+
     private Long size;
+
     private String checksum;
+
     private LocalDateTime createdAt;
-    private boolean deleted;
+
+    @Column(nullable = false)
+    private boolean deleted = false;
 
     public StoredObject() {
     }

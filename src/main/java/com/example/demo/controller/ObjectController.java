@@ -78,8 +78,12 @@ public class ObjectController {
                     .header("Content-Type", "application/octet-stream")
                     .body(data);
 
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
+
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError()
+                    .body("Failed to retrieve object: " + e.getMessage());
         }
     }
 
@@ -95,11 +99,21 @@ public class ObjectController {
     public ResponseEntity<?> deleteObject(
             @PathVariable String bucketName,
             @PathVariable String objectName) {
+
         try {
             objectService.deleteObject(bucketName, objectName);
-            return ResponseEntity.ok("Object deleted successfully");
+
+            return ResponseEntity.ok(
+                    "Object deleted successfully"
+            );
+
         } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(404)
+                    .body(e.getMessage());
+
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError()
+                    .body("Failed to delete object: " + e.getMessage());
         }
     }
 }

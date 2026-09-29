@@ -33,6 +33,8 @@ public class ObjectService {
         Bucket bucket = bucketRepository.findByName(bucketName)
                 .orElseThrow(() -> new RuntimeException("Bucket not found"));
 
+        // Version numbers continue increasing even if an older version
+        // has been soft-deleted.
         int nextVersion = objectRepository
                 .findFirstByBucketAndObjectNameOrderByVersionDesc(
                         bucket, objectName)
@@ -58,7 +60,8 @@ public class ObjectService {
         Bucket bucket = bucketRepository.findByName(bucketName)
                 .orElseThrow(() -> new RuntimeException("Bucket not found"));
 
-        return objectRepository.findByBucket(bucket);
+        // Do not return soft-deleted objects to the frontend.
+        return objectRepository.findByBucketAndDeletedFalse(bucket);
     }
 
     public StoredObject getLatestObject(
@@ -71,6 +74,7 @@ public class ObjectService {
         return objectRepository
                 .findFirstByBucketAndObjectNameOrderByVersionDesc(
                         bucket, objectName)
+                .filter(object -> !object.isDeleted())
                 .orElseThrow(() -> new RuntimeException("Object not found"));
     }
 
@@ -81,18 +85,24 @@ public class ObjectService {
         Bucket bucket = bucketRepository.findByName(bucketName)
                 .orElseThrow(() -> new RuntimeException("Bucket not found"));
 
+        // Version history is retained, including soft-deleted versions.
         return objectRepository.findByBucketAndObjectName(
                 bucket, objectName);
     }
-    
+
     public void deleteObject(String bucketName, String objectName) {
+
         Bucket bucket = bucketRepository.findByName(bucketName)
                 .orElseThrow(() -> new RuntimeException("Bucket not found"));
 
         StoredObject object = objectRepository
-                .findFirstByBucketAndObjectNameOrderByVersionDesc(bucket, objectName)
+                .findFirstByBucketAndObjectNameOrderByVersionDesc(
+                        bucket, objectName)
+                .filter(currentObject -> !currentObject.isDeleted())
                 .orElseThrow(() -> new RuntimeException("Object not found"));
 
+        // Soft delete: retain the record and version history,
+        // but hide the object from the active object listing.
         object.setDeleted(true);
         objectRepository.save(object);
     }

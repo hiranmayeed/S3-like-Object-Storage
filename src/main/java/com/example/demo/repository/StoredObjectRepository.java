@@ -9,13 +9,16 @@ import java.util.Optional;
 
 public interface StoredObjectRepository extends JpaRepository<StoredObject, Long> {
 
-    List<StoredObject> findByBucket(Bucket bucket);
+    // Return only objects that have not been soft-deleted
+    List<StoredObject> findByBucketAndDeletedFalse(Bucket bucket);
 
+    // Return all versions of an object, including deleted versions
     List<StoredObject> findByBucketAndObjectName(
             Bucket bucket,
             String objectName
     );
 
+    // Find the latest version of an object
     Optional<StoredObject> findFirstByBucketAndObjectNameOrderByVersionDesc(
             Bucket bucket,
             String objectName
